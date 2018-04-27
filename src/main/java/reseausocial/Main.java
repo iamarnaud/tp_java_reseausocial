@@ -21,6 +21,13 @@ public class Main {
 		
 		Menu menu = new Menu();
 		menu.menu(userA);
-				
+		
+		Moderateur modA = new Moderateur();
+		modA.setNom("");
+		modA.setPrenom("");
+		modA.setPseudo("");
+		modA.setVille("");
+		
+ 	
 		}
 }

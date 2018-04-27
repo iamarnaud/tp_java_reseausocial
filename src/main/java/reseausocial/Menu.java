@@ -36,7 +36,7 @@ public class Menu {
 			Message.changeMessage();
 			break;
 		case 5:
-			Message.changeMessage();
+			logout();
 			break;
 		}
 		afficherMenu = retMenu();
@@ -66,9 +66,15 @@ public class Menu {
 
 	}
 	
-	public static void ShowProfil(Users userA) {
+	private void ShowProfil(Users userA) {
 		System.out.println("Profil de : " + userA.getNom() + ' ' + userA.getPrenom());
 
 	}
-
+	
+	private void logout() {
+		System.out.println("Babye ! A bientôt sur SeecretSpot");
+	
+	}
+	
+	
 } // public class Menu
