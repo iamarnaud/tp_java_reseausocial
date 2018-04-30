@@ -6,12 +6,12 @@ public class Menu {
 
 	Scanner sc = new Scanner(System.in);
 
-	public void menu(Moderateur modA) {
+	public void menu(Moderateur modA) throws MenuException {
 		boolean afficherMenu = true;
 
 		while (afficherMenu) {
 
-			if (Moderateur.isModerator() == false) { 
+			if (Moderateur.isModerator() == false) {
 
 				System.out.println("BIENVENUE SUR SEECRETSPOT\n");
 				System.out.println("Faites votre choix :\n");
@@ -19,7 +19,7 @@ public class Menu {
 				System.out.println("-1- Afficher votre profil");
 				System.out.println("-2- Modifier les informations");
 				System.out.println("-3- Ecrire un message");
-				System.out.println("-4- Modifier un message");
+				System.out.println("-4- Afficher un message");
 				System.out.println("-5- Se deconnecter");
 
 				int menu = sc.nextInt();
@@ -28,7 +28,7 @@ public class Menu {
 				/*
 				 * switch (menu) { case 1: ShowProfil(userA); break; case 2:
 				 * Users.modifierInfo(); break; case 3: writeMessage(userA); break; case 4:
-				 * changeMessage(userA); break; case 5: logout(); break; } afficherMenu =
+				 * showMessage(userA); break; case 5: logout(); break; } afficherMenu =
 				 * retMenu();
 				 */
 			} // if
@@ -40,36 +40,43 @@ public class Menu {
 				System.out.println("-1- Afficher votre profil");
 				System.out.println("-2- Modifier les informations");
 				System.out.println("-3- Ecrire un message");
-				System.out.println("-4- Modifier un message");
+				System.out.println("-4- Afficher un message");
 				System.out.println("-5- Se deconnecter");
 				System.out.println("-6- Tester");
 
 				int menu = sc.nextInt();
 				sc.nextLine();
 
-				switch (menu) {
-				case 1:
-					ShowProfil(modA);
-					break;
-				case 2:
-					Users.modifierInfo();
-					break;
-				case 3:
-					writeMessage(modA);
-					break;
-				case 4:
-					changeMessage(modA);
-					break;
-				case 5:
-					logout();
-					break;
-				case 6:
-					System.out.println("test");
-
+				try {
+					switch (menu) {
+					case 1:
+						ShowProfil(modA);
+						break;
+					case 2:
+						Users.modifierInfo();
+						break;
+					case 3:
+						writeMessage(modA);
+						break;
+					case 4:
+						showMessage(modA);
+						break;
+					case 5:
+						logout();
+						break;
+					case 6:
+						System.out.println("test");
+					}
+					
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				if (menu > 6) {
+					throw new MenuException();
 				}
 				afficherMenu = retMenu();
 			} // if
-			
+
 			else if (Moderateur.isModerator() == true && Moderateur.getMod() == 2) {
 				System.out.println("BIENVENUE SUR SEECRETSPOT\n");
 				System.out.println("Faites votre choix :\n");
@@ -77,7 +84,7 @@ public class Menu {
 				System.out.println("-1- Afficher votre profil");
 				System.out.println("-2- Modifier les informations");
 				System.out.println("-3- Ecrire un message");
-				System.out.println("-4- Modifier un message");
+				System.out.println("-4- Afficher un message");
 				System.out.println("-5- Se deconnecter");
 				System.out.println("-6- Tester");
 				System.out.println("-7- TESTER");
@@ -96,7 +103,7 @@ public class Menu {
 					writeMessage(modA);
 					break;
 				case 4:
-					changeMessage(modA);
+					showMessage(modA);
 					break;
 				case 5:
 					logout();
@@ -105,9 +112,8 @@ public class Menu {
 					System.out.println("test2");
 
 				}
-				afficherMenu = retMenu();	
-			}// elseif
-
+				afficherMenu = retMenu();
+			} // elseif
 		} // boucle while1
 	} // public void menu
 
@@ -150,7 +156,7 @@ public class Menu {
 		System.out.println(modA.getMessage());
 	}
 
-	public void changeMessage(Moderateur modA) {
+	public void showMessage(Moderateur modA) {
 		System.out.println(modA.getMessage());
 	}
 
@@ -169,13 +175,13 @@ public class Menu {
  * System.out.println("-1- Afficher votre profil");
  * System.out.println("-2- Modifier les informations");
  * System.out.println("-3- Ecrire un message");
- * System.out.println("-4- Modifier un message");
+ * System.out.println("-4- Afficher un message");
  * System.out.println("-5- Se deconnecter");
  * 
  * int menu = sc.nextInt(); sc.nextLine();
  * 
  * switch (menu) { case 1: ShowProfil(userA); break; case 2:
  * Users.modifierInfo(); break; case 3: Post.writeMessage(); break; case 4:
- * Post.changeMessage(); break; case 5: logout(); break; } afficherMenu =
+ * Post.showMessage(); break; case 5: logout(); break; } afficherMenu =
  * retMenu(); } //boucle while1 } //public void menu
  */
