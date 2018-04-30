@@ -3,52 +3,120 @@ package reseausocial;
 import java.util.Scanner;
 
 public class Menu {
-		
+
 	Scanner sc = new Scanner(System.in);
-	
-	public void menu(Users userA) { 
+
+	public void menu(Moderateur modA) {
 		boolean afficherMenu = true;
 
-	while(afficherMenu) {
-		System.out.println("BIENVENUE SUR SEECRETSPOT\n");
-		System.out.println("Faites votre choix :\n");
+		while (afficherMenu) {
 
-		System.out.println("-1- Afficher votre profil");
-		System.out.println("-2- Modifier les informations");
-		System.out.println("-3- Ecrire un message");
-		System.out.println("-4- Modifier un message");
-		System.out.println("-5- Se deconnecter");
+			if (Moderateur.isModerator() == false) { 
 
-		int menu = sc.nextInt();
-		sc.nextLine();
-	
-	switch (menu) {
-		case 1:
-			ShowProfil(userA);
-			break;
-		case 2:
-			Users.modifierInfo();
-			break;
-		case 3:
-			Message.writeMessage();
-			break;
-		case 4:
-			Message.changeMessage();
-			break;
-		case 5:
-			logout();
-			break;
-		}
-		afficherMenu = retMenu();
-	} //boucle while1
-	} //public void menu
-	
+				System.out.println("BIENVENUE SUR SEECRETSPOT\n");
+				System.out.println("Faites votre choix :\n");
+
+				System.out.println("-1- Afficher votre profil");
+				System.out.println("-2- Modifier les informations");
+				System.out.println("-3- Ecrire un message");
+				System.out.println("-4- Modifier un message");
+				System.out.println("-5- Se deconnecter");
+
+				int menu = sc.nextInt();
+				sc.nextLine();
+
+				/*
+				 * switch (menu) { case 1: ShowProfil(userA); break; case 2:
+				 * Users.modifierInfo(); break; case 3: writeMessage(userA); break; case 4:
+				 * changeMessage(userA); break; case 5: logout(); break; } afficherMenu =
+				 * retMenu();
+				 */
+			} // if
+
+			else if (Moderateur.isModerator() == true && Moderateur.getMod() == 1) {
+				System.out.println("BIENVENUE SUR SEECRETSPOT\n");
+				System.out.println("Faites votre choix :\n");
+
+				System.out.println("-1- Afficher votre profil");
+				System.out.println("-2- Modifier les informations");
+				System.out.println("-3- Ecrire un message");
+				System.out.println("-4- Modifier un message");
+				System.out.println("-5- Se deconnecter");
+				System.out.println("-6- Tester");
+
+				int menu = sc.nextInt();
+				sc.nextLine();
+
+				switch (menu) {
+				case 1:
+					ShowProfil(modA);
+					break;
+				case 2:
+					Users.modifierInfo();
+					break;
+				case 3:
+					writeMessage(modA);
+					break;
+				case 4:
+					changeMessage(modA);
+					break;
+				case 5:
+					logout();
+					break;
+				case 6:
+					System.out.println("test");
+
+				}
+				afficherMenu = retMenu();
+			} // if
+			
+			else if (Moderateur.isModerator() == true && Moderateur.getMod() == 2) {
+				System.out.println("BIENVENUE SUR SEECRETSPOT\n");
+				System.out.println("Faites votre choix :\n");
+
+				System.out.println("-1- Afficher votre profil");
+				System.out.println("-2- Modifier les informations");
+				System.out.println("-3- Ecrire un message");
+				System.out.println("-4- Modifier un message");
+				System.out.println("-5- Se deconnecter");
+				System.out.println("-6- Tester");
+				System.out.println("-7- TESTER");
+
+				int menu = sc.nextInt();
+				sc.nextLine();
+
+				switch (menu) {
+				case 1:
+					ShowProfil(modA);
+					break;
+				case 2:
+					Users.modifierInfo();
+					break;
+				case 3:
+					writeMessage(modA);
+					break;
+				case 4:
+					changeMessage(modA);
+					break;
+				case 5:
+					logout();
+					break;
+				case 7:
+					System.out.println("test2");
+
+				}
+				afficherMenu = retMenu();	
+			}// elseif
+
+		} // boucle while1
+	} // public void menu
+
 	// Demande a l'utilisateur si il faut returner au menu ou quiter
 	// @return : true si on retourne au menu sinon false
 
 	private static boolean retMenu() {
 		System.out.println("Retourner au menu ? ");
-	    return demanderOuiNon();
+		return demanderOuiNon();
 	}
 
 	private static boolean demanderOuiNon() {
@@ -65,16 +133,49 @@ public class Menu {
 		}
 
 	}
-	
-	private void ShowProfil(Users userA) {
-		System.out.println("Profil de : " + userA.getNom() + ' ' + userA.getPrenom());
+
+	private void ShowProfil(Moderateur modA) {
+		System.out.println("Profil de : " + modA.getNom() + ' ' + modA.getPrenom());
 
 	}
-	
+
 	private void logout() {
 		System.out.println("Babye ! A bientôt sur SeecretSpot");
-	
+
 	}
-	
-	
+
+	public void writeMessage(Moderateur modA) {
+		System.out.println("merci d'écrire un nouveau message :");
+		modA.setMessage(sc.nextLine());
+		System.out.println(modA.getMessage());
+	}
+
+	public void changeMessage(Moderateur modA) {
+		System.out.println(modA.getMessage());
+	}
+
 } // public class Menu
+
+/*
+ * public class Menu {
+ * 
+ * Scanner sc = new Scanner(System.in);
+ * 
+ * public void menu(Users userA) { boolean afficherMenu = true;
+ * 
+ * while(afficherMenu) { System.out.println("BIENVENUE SUR SEECRETSPOT\n");
+ * System.out.println("Faites votre choix :\n");
+ * 
+ * System.out.println("-1- Afficher votre profil");
+ * System.out.println("-2- Modifier les informations");
+ * System.out.println("-3- Ecrire un message");
+ * System.out.println("-4- Modifier un message");
+ * System.out.println("-5- Se deconnecter");
+ * 
+ * int menu = sc.nextInt(); sc.nextLine();
+ * 
+ * switch (menu) { case 1: ShowProfil(userA); break; case 2:
+ * Users.modifierInfo(); break; case 3: Post.writeMessage(); break; case 4:
+ * Post.changeMessage(); break; case 5: logout(); break; } afficherMenu =
+ * retMenu(); } //boucle while1 } //public void menu
+ */

@@ -1,5 +1,4 @@
 package reseausocial;
-import java.util.Scanner;
 
 
 public class Main {
@@ -19,14 +18,19 @@ public class Main {
 		userB.setVille("Londres");
 		System.out.println(userB.getPrenom());
 		
-		Menu menu = new Menu();
-		menu.menu(userA);
-		
 		Moderateur modA = new Moderateur();
 		modA.setNom("");
 		modA.setPrenom("");
 		modA.setPseudo("");
 		modA.setVille("");
+		modA.setMod(2);
+		
+		Menu menu = new Menu();
+		menu.menu(modA);
+		
+	
+		
+		
 		
  	
 		}

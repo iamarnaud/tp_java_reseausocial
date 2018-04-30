@@ -8,6 +8,7 @@ public class Users {
 	private String prenom; 
 	private String ville; 
 	private String pseudo;
+	private String message;
 	
 	// Constructeur par défaut 
 	public Users() {
@@ -15,6 +16,8 @@ public class Users {
 		prenom = "Inconnu";
 		ville = "Inconnu";
 		pseudo = "Inconnu";
+		message = "Inconnu";
+		
 	}
 	
 	 // Accesseurs
@@ -56,6 +59,14 @@ public class Users {
 		this.pseudo = pseudo;
 	}
 	
+	public String getMessage() {
+		return message;
+}
+	
+	public void setMessage(String message) {
+		this.message = message;
+}
+	
 	public static void modifierInfo() {
 
 	}
@@ -65,7 +76,7 @@ public class Users {
 	}
 	
 	public static boolean isModerator() {
-		return false;
+		return false; // modo niveau 0
 	}	
 		
 }
