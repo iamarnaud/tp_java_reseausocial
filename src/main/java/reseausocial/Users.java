@@ -1,6 +1,8 @@
 package reseausocial;
 
-import javax.swing.plaf.synth.SynthSeparatorUI;
+import java.util.Scanner;
+
+// import java.util.Date;
 
 public class Users {
 
@@ -9,22 +11,21 @@ public class Users {
 	private String ville;
 	private String pseudo;
 	private String message;
+	private String dateNaissance;
 
 	// Constructeur par défaut
+	
 	public Users() {
 		nom = "Inconnu";
 		prenom = "Inconnu";
 		ville = "Inconnu";
 		pseudo = "Inconnu";
 		message = "Inconnu";
+		dateNaissance = "Inconnu"  ;
 
 	}
 
 	// Accesseurs
-	/**
-	 * 
-	 * @param nom
-	 */
 
 	public String getNom() {
 		return nom;
@@ -65,14 +66,22 @@ public class Users {
 	public void setMessage(String message) {
 		this.message = message;
 	}
+	
+	public String getDateNaissance() {
+		return dateNaissance;
+	}
 
+	public void setDateNaissance(String dateNaissance) {
+		this.dateNaissance = dateNaissance;
+	}
+
+	
+	// autres methodes 
+	
 	public static void modifierInfo() {
 
 	}
 
-	public static void createProfil() {
-
-	}
 
 	public static boolean isModerator() {
 		return false; // modo niveau 0
