@@ -2,15 +2,10 @@ package reseausocial;
 
 import java.util.Scanner;
 
-public class CreateProfil {
+public class CreateProfil extends Users {
 
-	private static String nom;
-	private static String prenom;
-	private static String pseudo;
-	private static String ville;
-	private static String dateNaissance;
 
-	public CreateProfil() {
+	private CreateProfil() {
 		nom = "Inconnu";
 		prenom = "Inconnu";
 		pseudo = "Inconnu";

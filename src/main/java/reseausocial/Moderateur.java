@@ -1,6 +1,6 @@
 package reseausocial;
 
-public class Moderateur extends Users {
+public class Moderateur extends Users implements Salarié{
 
 	// modo de niveau 1 : sup message
 	private int mod1 = 1;
@@ -39,6 +39,12 @@ public class Moderateur extends Users {
 
 	public void setMod(int mod) {
 		this.mod = mod;
+	}
+
+	@Override
+	public void recevoirPaiement() {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

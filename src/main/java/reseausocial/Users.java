@@ -6,12 +6,12 @@ import java.util.Scanner;
 
 public class Users {
 
-	private String nom;
-	private String prenom;
-	private String ville;
-	private String pseudo;
-	private String message;
-	private String dateNaissance;
+	protected static String nom;
+	protected static String prenom;
+	protected static String ville;
+	protected static String pseudo;
+	protected static String message;
+	protected static String dateNaissance;
 
 	// Constructeur par défaut
 	
@@ -85,6 +85,11 @@ public class Users {
 
 	public static boolean isModerator() {
 		return false; // modo niveau 0
+	}
+	
+	
+	public static void seDeconnecter() {
+		
 	}
 
 }
