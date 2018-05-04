@@ -30,8 +30,8 @@
   </class>  
   <class id="4" language="java" name="reseausocial.Users" project="Reseau_social" 
     file="/Reseau_social/src/main/java/reseausocial/Users.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="641" y="257"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+    <position height="400" width="173" x="555" y="28"/>    
+    <display autosize="false" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
@@ -39,7 +39,7 @@
   </class>  
   <interface id="5" language="java" name="reseausocial.Salarié" project="Reseau_social" 
     file="/Reseau_social/src/main/java/reseausocial/Salarié.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="136" y="493"/>    
+    <position height="-1" width="-1" x="263" y="372"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -66,7 +66,7 @@
   </class>  
   <class id="8" language="java" name="reseausocial.CreateProfil" project="Reseau_social" 
     file="/Reseau_social/src/main/java/reseausocial/CreateProfil.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="910" y="458"/>    
+    <position height="-1" width="-1" x="855" y="323"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -75,7 +75,7 @@
   </class>  
   <class id="9" language="java" name="reseausocial.Moderateur" project="Reseau_social" 
     file="/Reseau_social/src/main/java/reseausocial/Moderateur.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="400" y="496"/>    
+    <position height="-1" width="-1" x="447" y="484"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -91,19 +91,75 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <realization id="11">    
-    <end type="SOURCE" refId="2"/>    
-    <end type="TARGET" refId="5"/>  
-  </realization>  
-  <realization id="12">    
-    <end type="SOURCE" refId="9"/>    
-    <end type="TARGET" refId="5"/>  
-  </realization>  
-  <generalization id="13">    
+  <class id="11" language="java" name="reseausocial.Directeur" project="Reseau_social" 
+    file="/Reseau_social/src/main/java/reseausocial/Directeur.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="117" width="136" x="10" y="570"/>    
+    <display autosize="false" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="12" language="java" name="reseausocial.Marketeur" project="Reseau_social" 
+    file="/Reseau_social/src/main/java/reseausocial/Marketeur.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="196" y="610"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="13" language="java" name="reseausocial.Développeur" project="Reseau_social" 
+    file="/Reseau_social/src/main/java/reseausocial/Développeur.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="296" y="610"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <interface id="14" language="java" name="reseausocial.Relation" project="Reseau_social" 
+    file="/Reseau_social/src/main/java/reseausocial/Relation.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="494" y="762"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <generalization id="15">    
+    <end type="SOURCE" refId="13"/>    
+    <end type="TARGET" refId="2"/>  
+  </generalization>  
+  <generalization id="16">    
+    <end type="SOURCE" refId="11"/>    
+    <end type="TARGET" refId="2"/>  
+  </generalization>  
+  <generalization id="17">    
+    <end type="SOURCE" refId="12"/>    
+    <end type="TARGET" refId="2"/>  
+  </generalization>  
+  <generalization id="18">    
     <end type="SOURCE" refId="9"/>    
     <end type="TARGET" refId="4"/>  
   </generalization>  
-  <generalization id="14">    
+  <realization id="19">    
+    <end type="SOURCE" refId="9"/>    
+    <end type="TARGET" refId="5"/>  
+  </realization>  
+  <realization id="20">    
+    <end type="SOURCE" refId="4"/>    
+    <end type="TARGET" refId="14"/>  
+  </realization>  
+  <realization id="21">    
+    <end type="SOURCE" refId="11"/>    
+    <end type="TARGET" refId="14"/>  
+  </realization>  
+  <realization id="22">    
+    <end type="SOURCE" refId="2"/>    
+    <end type="TARGET" refId="5"/>  
+  </realization>  
+  <generalization id="23">    
     <end type="SOURCE" refId="8"/>    
     <end type="TARGET" refId="4"/>  
   </generalization>  

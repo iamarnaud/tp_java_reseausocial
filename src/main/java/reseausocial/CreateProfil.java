@@ -8,8 +8,7 @@ public class CreateProfil extends Users {
 	private CreateProfil() {
 		nom = "Inconnu";
 		prenom = "Inconnu";
-		pseudo = "Inconnu";
-		ville = "Inconnu";
+		//pseudo = "Inconnu";
 		dateNaissance = null;
 	}
 
@@ -22,11 +21,8 @@ public class CreateProfil extends Users {
 		System.out.println("prenom");
 		prenom = sc.nextLine();
 
-		System.out.println("pseudo");
-		pseudo = sc.nextLine();
-
-		System.out.println("ville");
-		ville = sc.nextLine();
+		//System.out.println("pseudo");
+		//pseudo = sc.nextLine();
 
 		try {
 			System.out.println("dateNaissance");
@@ -56,21 +52,13 @@ public class CreateProfil extends Users {
 		CreateProfil.nom = nom;
 	}
 
-	public String getPseudo() {
+	/*public String getPseudo() {
 		return pseudo;
 	}
 
 	public void setPseudo(String pseudo) {
 		this.pseudo = pseudo;
-	}
-
-	public String getVille() {
-		return ville;
-	}
-
-	public void setVille(String ville) {
-		this.ville = ville;
-	}
+	}*/
 
 	public String getDateNaissance() {
 		return dateNaissance;

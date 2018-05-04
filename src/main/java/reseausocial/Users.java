@@ -4,12 +4,11 @@ import java.util.Scanner;
 
 // import java.util.Date;
 
-public class Users {
+public class Users implements Relation {
 
 	protected static String nom;
 	protected static String prenom;
-	protected static String ville;
-	protected static String pseudo;
+	//protected static String pseudo;
 	protected static String message;
 	protected static String dateNaissance;
 
@@ -18,8 +17,7 @@ public class Users {
 	public Users() {
 		nom = "Inconnu";
 		prenom = "Inconnu";
-		ville = "Inconnu";
-		pseudo = "Inconnu";
+		//pseudo = "Inconnu";
 		message = "Inconnu";
 		dateNaissance = "Inconnu"  ;
 
@@ -43,21 +41,14 @@ public class Users {
 		this.prenom = prenom;
 	}
 
-	public String getVille() {
-		return ville;
-	}
-
-	public void setVille(String ville) {
-		this.ville = ville;
-	}
-
-	public String getPseudo() {
+	
+	/*public String getPseudo() {
 		return pseudo;
 	}
 
 	public void setPseudo(String pseudo) {
 		this.pseudo = pseudo;
-	}
+	}*/
 
 	public String getMessage() {
 		return message;
@@ -78,18 +69,29 @@ public class Users {
 	
 	// autres methodes 
 	
-	public static void modifierInfo() {
-
-	}
-
 
 	public static boolean isModerator() {
 		return false; // modo niveau 0
 	}
 	
+	public static void modifierInfo() {
+		
+	}
+	
+	public static void seConnecter() {
+		
+	}
 	
 	public static void seDeconnecter() {
 		
 	}
+
+	@Override
+	public void ajouterPersonne() {
+		
+		
+	}
+
+	
 
 }

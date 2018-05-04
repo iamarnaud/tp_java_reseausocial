@@ -41,6 +41,11 @@ public class Moderateur extends Users implements Salarié{
 		this.mod = mod;
 	}
 
+	
+	public void supprimerMessage() {
+		 
+	}
+	
 	@Override
 	public void recevoirPaiement() {
 		// TODO Auto-generated method stub
