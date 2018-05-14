@@ -1,28 +1,26 @@
 package reseausocial;
 
+import java.lang.reflect.Array;
 import java.util.Scanner;
-
 // import java.util.Date;
 
 public class Users implements Relation {
 
-	protected static String nom;
-	protected static String prenom;
-	//protected static String pseudo;
-	protected static String message;
-	protected static String dateNaissance;
+	protected String nom;
+	protected String prenom;
+	protected String message;
+	protected String dateNaissance;
+	protected Array friendsList;
 
 	// Constructeur par défaut
 	
 	public Users() {
 		nom = "Inconnu";
 		prenom = "Inconnu";
-		//pseudo = "Inconnu";
 		message = "Inconnu";
-		dateNaissance = "Inconnu"  ;
-
+		dateNaissance = "Inconnu";
 	}
-
+	
 	// Accesseurs
 
 	public String getNom() {
@@ -41,15 +39,6 @@ public class Users implements Relation {
 		this.prenom = prenom;
 	}
 
-	
-	/*public String getPseudo() {
-		return pseudo;
-	}
-
-	public void setPseudo(String pseudo) {
-		this.pseudo = pseudo;
-	}*/
-
 	public String getMessage() {
 		return message;
 	}
@@ -65,32 +54,43 @@ public class Users implements Relation {
 	public void setDateNaissance(String dateNaissance) {
 		this.dateNaissance = dateNaissance;
 	}
-
 	
+	public Array getFriendsList() {
+		return friendsList;
+	}
+
+	public void setFriendsList(Array friendsList) {
+		this.friendsList = friendsList;
+	}
+
 	// autres methodes 
 	
-
-	public static boolean isModerator() {
+	//pour retourner les information de notre listUsers
+	public String toString() {
+		return nom + " " + prenom;
+	}
+	
+	public boolean isModerator() {
 		return false; // modo niveau 0
 	}
 	
-	public static void modifierInfo() {
+	public void modifierInfo() {
 		
 	}
 	
-	public static void seConnecter() {
+	public void seConnecter() {
 		
 	}
 	
-	public static void seDeconnecter() {
+	public void seDeconnecter() {
 		
 	}
 
 	@Override
 	public void ajouterPersonne() {
 		
-		
 	}
+
 
 	
 

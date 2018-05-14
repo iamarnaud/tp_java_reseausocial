@@ -23,17 +23,17 @@ public class Moderateur extends Users implements Salarié{
 		this.mod2 = mod2;
 	}
 
-	public static boolean isModerator() {
+	public boolean isModerator() {
 		return true;
 	}
 
-	private static int mod;
+	private int mod;
 
 	public Moderateur() {
 		mod = 1;
 	}
 
-	public static int getMod() {
+	public int getMod() {
 		return mod;
 	}
 
@@ -42,7 +42,7 @@ public class Moderateur extends Users implements Salarié{
 	}
 
 	
-	public void supprimerMessage() {
+	public void DeleteMessage() {
 		 
 	}
 	

@@ -8,5 +8,6 @@ public class Directeur extends Employé implements Relation{
 	public void ajouterPersonne() {
 		
 	}
+	
 
 }

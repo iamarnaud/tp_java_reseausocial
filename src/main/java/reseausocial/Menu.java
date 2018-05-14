@@ -1,60 +1,30 @@
 package reseausocial;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Menu {
 
 	Scanner sc = new Scanner(System.in);
-
-	public void menu(Moderateur modA) throws MenuException {
+	
+	CreateProfil newProfil = new CreateProfil();
+	
+	public void menu(Moderateur modA, ArrayList<Users> listUsers, ArrayList<Users> friendsList) throws MenuException, DateException {
 		boolean afficherMenu = true;
 
 		while (afficherMenu) {
 
-			if (Moderateur.isModerator() == false) {
+			if (modA.isModerator() == false) {
 
 				menu0();
+	
+			}
 
-				/*
-				 * System.out.println("BIENVENUE SUR SEECRETSPOT\n");
-				 * System.out.println("Faites votre choix :\n");
-				 * 
-				 * System.out.println("-1- Afficher votre profil");
-				 * System.out.println("-2- Modifier les informations");
-				 * System.out.println("-3- Ecrire un message");
-				 * System.out.println("-4- Afficher un message");
-				 * System.out.println("-5- Se deconnecter");
-				 * System.out.println("-6- Créer un profil");
-				 */
-
-				/*
-				 * int menu = sc.nextInt(); sc.nextLine();
-				 * 
-				 * switch (menu) { case 1: ShowProfil(userA); break; case 2:
-				 * Users.modifierInfo(); break; case 3: writeMessage(userA); break; case 4:
-				 * showMessage(userA); break; case 5: logout(); break; } afficherMenu =
-				 * retMenu();
-				 */
-
-			} // if
-
-			else if (Moderateur.isModerator() == true && Moderateur.getMod() == 1) {
+			else if (modA.isModerator() == true && modA.getMod() == 1) {
 
 				menu0();
 				menu1();
-				/*
-				 * System.out.println("BIENVENUE SUR SEECRETSPOT\n");
-				 * System.out.println("Faites votre choix :\n");
-				 * 
-				 * System.out.println("-1- Afficher votre profil");
-				 * System.out.println("-2- Modifier les informations");
-				 * System.out.println("-3- Ecrire un message");
-				 * System.out.println("-4- Afficher un message");
-				 * System.out.println("-5- Se deconnecter"); 
-				 * System.out.println("-6- Créer un profil");
-				 * System.out.println("-7- Tester");
-				 */
-
+				
 				int menu = sc.nextInt();
 				sc.nextLine();
 
@@ -64,54 +34,46 @@ public class Menu {
 						ShowProfil(modA);
 						break;
 					case 2:
-						Users.modifierInfo();
+						FriendsList(friendsList);
 						break;
 					case 3:
-						writeMessage(modA);
+						AddFriend();
 						break;
-					case 4:
-						showMessage(modA);
-						break;
+					case 4: 
+						DeleteFriend();
 					case 5:
-						logout();
+						Search();
 						break;
 					case 6:
-						CreateProfil.createProfil();
+						writeMessage(modA);
 						break;
 					case 7:
-						System.out.println("test");
+						showMessage(modA);
+						break;
+					case 8:
+						logout();
+						break;
+					case 9:
+						newProfil.createProfil(listUsers);
+						break;
 					}
-
+					
 				} catch (Exception e) {
 					System.out.println(e.getMessage());
 					//e.printStackTrace();
 				}
 
-				if (menu > 6) {
+				if (menu > 11) {
 					throw new MenuException();
 				}
 				afficherMenu = retMenu();
 			} // if
 
-			else if (Moderateur.isModerator() == true && Moderateur.getMod() == 2) {
+			else if (modA.isModerator() == true && modA.getMod() == 2) {
 
 				menu0();
 				menu1();
 				menu2();
-
-				/*
-				 * System.out.println("BIENVENUE SUR SEECRETSPOT\n");
-				 * System.out.println("Faites votre choix :\n");
-				 * 
-				 * System.out.println("-1- Afficher votre profil");
-				 * System.out.println("-2- Modifier les informations");
-				 * System.out.println("-3- Ecrire un message");
-				 * System.out.println("-4- Afficher un message");
-				 * System.out.println("-5- Se deconnecter"); 
-				 * System.out.println("-6- Créer un profil");
-				 * System.out.println("-7- Tester");
-				 * System.out.println("-8- TESTER");
-				 */
 
 				int menu = sc.nextInt();
 				sc.nextLine();
@@ -121,25 +83,44 @@ public class Menu {
 					ShowProfil(modA);
 					break;
 				case 2:
-					Users.modifierInfo();
+					FriendsList(friendsList);
 					break;
 				case 3:
+					AddFriend();
+					break;
+				case 4: 
+					DeleteFriend();
+				case 5:
+					Search();
+					break;
+				case 6:
 					writeMessage(modA);
 					break;
-				case 4:
+				case 7:
 					showMessage(modA);
 					break;
-				case 5:
+				case 8:
 					logout();
 					break;
-				case 7:
-					System.out.println("test2");
-
+				case 9:
+					newProfil.createProfil(listUsers);
+					break;
+				case 10: 
+					 modA.DeleteMessage();
+					 break;
+				/*
+				 case 11: 
+				 TESTER();
+				*/	
 				}
+				
 				afficherMenu = retMenu();
 			} // elseif
 		} // boucle while1
 	} // public void menu
+
+
+
 
 	/**
 	 * Demande a l'utilisateur si il faut returner au menu ou quiter
@@ -147,12 +128,12 @@ public class Menu {
 	 * @return : true si on retourne au menu sinon false
 	 */
 
-	private static boolean retMenu() {
+	private boolean retMenu() {
 		System.out.println("Retourner au menu ? ");
 		return demanderOuiNon();
 	}
 
-	private static boolean demanderOuiNon() {
+	private boolean demanderOuiNon() {
 		Scanner sc = new Scanner(System.in);
 		char r;
 		do {
@@ -186,21 +167,45 @@ public class Menu {
 	public void showMessage(Moderateur modA) {
 		System.out.println(modA.getMessage());
 	}
+	
+	public void FriendsList(ArrayList<Users> friendsList) {
+		System.out.println(friendsList); // friend list dans Main
+		
+	}
+
+	private void AddFriend() {
+		// TODO Auto-generated method stub
+		
+	}
+	
+
+	private void DeleteFriend() {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	private void Search() {
+		// TODO Auto-generated method stub
+		
+	}
 
 	/**
 	 * menu0 = fonction du menu principal modo0
 	 * @return le menu de l'utilisateur basic
 	 */
-	private static void menu0() {
+	private void menu0() {
 		System.out.println("BIENVENUE SUR SEECRETSPOT\n");
 		System.out.println("Faites votre choix :\n");
 
 		System.out.println("-1- Afficher votre profil");
-		System.out.println("-2- Modifier les informations");
-		System.out.println("-3- Ecrire un message");
-		System.out.println("-4- Afficher un message");
-		System.out.println("-5- Se deconnecter");
-		System.out.println("-6- Créer un profil");
+		System.out.println("-2- Afficher liste d'amis");
+		System.out.println("-3- Ajouter un ami");
+		System.out.println("-4- Supprimer un ami");
+		System.out.println("-5- Rechercher");
+		System.out.println("-6- Ecrire un message");
+		System.out.println("-7- Afficher un message");
+		System.out.println("-8- Se deconnecter");
+		System.out.println("-9- Créer un profil");
 	}
 
 	/**
@@ -210,7 +215,7 @@ public class Menu {
 	 */
 
 	private void menu1() {
-		System.out.println("-7- Tester");
+		System.out.println("-10- Supprimer un message");
 	}
 
 	/**
@@ -219,8 +224,8 @@ public class Menu {
 	 * @return le menu du modo2
 	 */
 
-	private static void menu2() {
-		System.out.println("-8- TESTER");
+	private void menu2() {
+		System.out.println("-11- TESTER");
 	}
 
 } // public class Menu
