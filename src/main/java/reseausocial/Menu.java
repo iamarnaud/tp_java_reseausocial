@@ -1,5 +1,10 @@
 package reseausocial;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -17,7 +22,6 @@ public class Menu {
 			if (modA.isModerator() == false) {
 
 				menu0();
-	
 			}
 
 			else if (modA.isModerator() == true && modA.getMod() == 1) {
@@ -42,7 +46,7 @@ public class Menu {
 					case 4: 
 						DeleteFriend();
 					case 5:
-						Search();
+						lireEnBase();
 						break;
 					case 6:
 						writeMessage(modA);
@@ -91,7 +95,7 @@ public class Menu {
 				case 4: 
 					DeleteFriend();
 				case 5:
-					Search();
+					lireEnBase();
 					break;
 				case 6:
 					writeMessage(modA);
@@ -119,9 +123,7 @@ public class Menu {
 		} // boucle while1
 	} // public void menu
 
-
-
-
+	
 	/**
 	 * Demande a l'utilisateur si il faut returner au menu ou quiter
 	 * 
@@ -148,14 +150,13 @@ public class Menu {
 
 	}
 
+	
 	private void ShowProfil(Moderateur modA) {
 		System.out.println("Profil de : " + modA.getNom() + ' ' + modA.getPrenom());
-
-	}
+		}
 
 	private void logout() {
 		System.out.println("Babye ! A bientôt sur SeecretSpot");
-
 	}
 
 	public void writeMessage(Moderateur modA) {
@@ -172,7 +173,48 @@ public class Menu {
 		System.out.println(friendsList); // friend list dans Main
 		
 	}
+	
+	public void lireEnBase() {
+		
+		//information d'accès à la BDD
+		String url = "jdbc:mysql://localhost/modulejava";
+		String user = "root";
+		String passwd = "";
+		Connection cn = null;
+		Statement st = null;
+		ResultSet rs = null;
+		
+		try {
+			// chargement du driver
+			Class.forName("com.mysql.jdbc.Driver");
 
+			// récupération de la connexion
+			cn = DriverManager.getConnection(url, user, passwd);
+
+			// creation d'un statement
+			st = cn.createStatement();
+			String sql = "SELECT * FROM users";
+
+			// execution requête
+			rs = st.executeQuery(sql);
+
+			while (rs.next()) {
+				System.out.println(rs.getString("nom") + " " + rs.getString("prenom")) ;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} finally {
+			try { // liberer ressources de la mémoire
+				cn.close();
+				st.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+	} // lireEnBase
+	
 	private void AddFriend() {
 		// TODO Auto-generated method stub
 		
@@ -184,10 +226,6 @@ public class Menu {
 		
 	}
 	
-	private void Search() {
-		// TODO Auto-generated method stub
-		
-	}
 
 	/**
 	 * menu0 = fonction du menu principal modo0
@@ -201,7 +239,7 @@ public class Menu {
 		System.out.println("-2- Afficher liste d'amis");
 		System.out.println("-3- Ajouter un ami");
 		System.out.println("-4- Supprimer un ami");
-		System.out.println("-5- Rechercher");
+		System.out.println("-5- Afficher");
 		System.out.println("-6- Ecrire un message");
 		System.out.println("-7- Afficher un message");
 		System.out.println("-8- Se deconnecter");
