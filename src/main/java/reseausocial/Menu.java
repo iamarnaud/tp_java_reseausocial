@@ -2,6 +2,7 @@ package reseausocial;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -11,10 +12,69 @@ import java.util.Scanner;
 public class Menu {
 
 	Scanner sc = new Scanner(System.in);
-	
+
 	CreateProfil newProfil = new CreateProfil();
-	
-	public void menu(Moderateur modA, ArrayList<Users> listUsers, ArrayList<Users> friendsList) throws MenuException, DateException {
+
+	private int friend;
+
+	int currentUser = 5; // par défaut le current user a l'id 5, selon son num en BDD
+	// Quand on se connecte à l'app le current user sera celui là)
+	// Il faudra définir le current comme la personne qui se connecte.
+
+	// information d'accès à la BDD
+	String url = "jdbc:mysql://localhost/modulejava";
+	String user = "root";
+	String passwd = "";
+
+	Connection cn = null;
+	Statement st = null;
+	ResultSet rs = null;
+	PreparedStatement stm = null;
+
+	/**
+	 * menu0 = fonction du menu principal modo0
+	 * 
+	 * @return le menu de l'utilisateur basic
+	 */
+	private void menu0() {
+
+		System.out.println("BIENVENUE SUR SEECRETSPOT\n");
+		System.out.println("Faites votre choix :\n");
+
+		System.out.println("-1- Afficher votre profil");
+		System.out.println("-2- Afficher liste d'amis");
+		System.out.println("-3- Ajouter un ami");
+		System.out.println("-4- Supprimer un ami");
+		System.out.println("-5- Afficher les utilisateurs");
+		System.out.println("-6- Ecrire un message");
+		System.out.println("-7- Afficher un message");
+		System.out.println("-8- Se deconnecter");
+		System.out.println("-9- Créer un profil");
+		System.out.println("-10- Chercher un profil");
+	}
+
+	/**
+	 * menu1 = fonction d'ajout de fonctionnalité au menu principal pour modo1
+	 * 
+	 * @return le menu du modo1
+	 */
+
+	private void menu1() {
+		System.out.println("-11- Supprimer un message");
+	}
+
+	/**
+	 * menu2 = fonction d'ajout de fonctionnalité au menu principal pour modo2
+	 * 
+	 * @return le menu du modo2
+	 */
+
+	private void menu2() {
+		System.out.println("-12- TESTER");
+	}
+
+	public void menu(Moderateur modA, ArrayList<Users> listUsers, ArrayList<Users> friendsList)
+			throws MenuException, DateException {
 		boolean afficherMenu = true;
 
 		while (afficherMenu) {
@@ -28,23 +88,23 @@ public class Menu {
 
 				menu0();
 				menu1();
-				
+
 				int menu = sc.nextInt();
 				sc.nextLine();
 
 				try {
 					switch (menu) {
 					case 1:
-						ShowProfil(modA);
+						showProfil(modA);
 						break;
 					case 2:
-						FriendsList(friendsList);
+						friendsList();
 						break;
 					case 3:
-						AddFriend();
+						addFriend();
 						break;
-					case 4: 
-						DeleteFriend();
+					case 4:
+						deleteFriend();
 					case 5:
 						lireEnBase();
 						break;
@@ -60,11 +120,14 @@ public class Menu {
 					case 9:
 						newProfil.createProfil(listUsers);
 						break;
+					case 10:
+						searchProfil();
+						break;
 					}
-					
+
 				} catch (Exception e) {
 					System.out.println(e.getMessage());
-					//e.printStackTrace();
+					e.printStackTrace();
 				}
 
 				if (menu > 11) {
@@ -84,16 +147,16 @@ public class Menu {
 
 				switch (menu) {
 				case 1:
-					ShowProfil(modA);
+					showProfil(modA);
 					break;
 				case 2:
-					FriendsList(friendsList);
+					friendsList();
 					break;
 				case 3:
-					AddFriend();
+					addFriend();
 					break;
-				case 4: 
-					DeleteFriend();
+				case 4:
+					deleteFriend();
 				case 5:
 					lireEnBase();
 					break;
@@ -109,34 +172,34 @@ public class Menu {
 				case 9:
 					newProfil.createProfil(listUsers);
 					break;
-				case 10: 
-					 modA.DeleteMessage();
-					 break;
+				case 10:
+					searchProfil();
+					break;
+				case 11:
+					modA.DeleteMessage();
+					break;
 				/*
-				 case 11: 
-				 TESTER();
-				*/	
+				 * case 12: TESTER(); break;
+				 */
 				}
-				
+
 				afficherMenu = retMenu();
 			} // elseif
 		} // boucle while1
 	} // public void menu
 
-	
 	/**
 	 * Demande a l'utilisateur si il faut returner au menu ou quiter
 	 * 
 	 * @return : true si on retourne au menu sinon false
 	 */
-
 	private boolean retMenu() {
 		System.out.println("Retourner au menu ? ");
 		return demanderOuiNon();
 	}
 
 	private boolean demanderOuiNon() {
-		Scanner sc = new Scanner(System.in);
+		// Scanner sc = new Scanner(System.in);
 		char r;
 		do {
 			System.out.println("Répondre par O / N");
@@ -150,10 +213,9 @@ public class Menu {
 
 	}
 
-	
-	private void ShowProfil(Moderateur modA) {
+	private void showProfil(Moderateur modA) {
 		System.out.println("Profil de : " + modA.getNom() + ' ' + modA.getPrenom());
-		}
+	}
 
 	private void logout() {
 		System.out.println("Babye ! A bientôt sur SeecretSpot");
@@ -168,22 +230,47 @@ public class Menu {
 	public void showMessage(Moderateur modA) {
 		System.out.println(modA.getMessage());
 	}
-	
-	public void FriendsList(ArrayList<Users> friendsList) {
-		System.out.println(friendsList); // friend list dans Main
-		
+
+	/*
+	 * public void friendsList(ArrayList<Users> friendsList) {
+	 * System.out.println(friendsList); // friend list dans Main }
+	 */
+
+	private void friendsList() {
+		try {
+			// chargement du driver
+			Class.forName("com.mysql.jdbc.Driver");
+
+			// récupération de la connexion
+			cn = DriverManager.getConnection(url, user, passwd);
+
+			// creation d'un statement pour ajouter un ami
+			st = cn.createStatement();
+			String sql = "SELECT ami.nom, ami.prenom FROM users AS current JOIN friends as F ON current.user_id = F.user_id JOIN users as ami ON ami.user_id = F.friend_id WHERE current.user_id = 5";
+
+			// execution requête
+			rs = st.executeQuery(sql);
+
+			while (rs.next()) {
+				System.out.println(rs.getString("nom") + " " + rs.getString("prenom"));
+
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} finally {
+			try { // liberer ressources de la mémoire
+				cn.close();
+				st.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
 	}
-	
+
 	public void lireEnBase() {
-		
-		//information d'accès à la BDD
-		String url = "jdbc:mysql://localhost/modulejava";
-		String user = "root";
-		String passwd = "";
-		Connection cn = null;
-		Statement st = null;
-		ResultSet rs = null;
-		
+
 		try {
 			// chargement du driver
 			Class.forName("com.mysql.jdbc.Driver");
@@ -199,7 +286,8 @@ public class Menu {
 			rs = st.executeQuery(sql);
 
 			while (rs.next()) {
-				System.out.println(rs.getString("nom") + " " + rs.getString("prenom")) ;
+				System.out.println(rs.getInt("user_id") + " " + rs.getString("nom") + " " + rs.getString("prenom"));
+
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -214,81 +302,112 @@ public class Menu {
 			}
 		}
 	} // lireEnBase
+
 	
-	private void AddFriend() {
-		// TODO Auto-generated method stub
+	private void searchProfil() {
+
+		String nom;
+		String prenom;
+
+		System.out.println("Chercher un utilisateur");
+		// Scanner sc = new Scanner(System.in);
+		System.out.println("nom");
+		nom = sc.nextLine();
+		System.out.println("prenom");
+		prenom = sc.nextLine();
+
+		try {
+			// chargement du driver
+			Class.forName("com.mysql.jdbc.Driver");
+
+			// récupération de la connexion
+			cn = DriverManager.getConnection(url, user, passwd);
+
+			/*
+			// creation d'un statement
+			st = cn.createStatement();
+			String sql = "SELECT * FROM users WHERE nom = '" + nom + "' AND prenom = '" + prenom + "' ";
+			*/
+			
+			// creation d'un prepared statement
+			String sql = "SELECT * FROM users WHERE nom=? AND prenom=?";
+			PreparedStatement preparedStatement = cn.prepareStatement(sql);
+			preparedStatement.setString(1, nom); // 1 c'est le 1er ?
+			preparedStatement.setString(2, prenom);
+			ResultSet rs = preparedStatement.executeQuery();
 		
-	}
-	
+			// execution requête
+			//rs = st.executeQuery(sql);
+			
+			rs.next();
+			System.out.println("Voir le profil de " + rs.getString("nom") + " " + rs.getString("prenom"));
+			System.out.println("Date de naissance: " + rs.getString("date_naissance"));
 
-	private void DeleteFriend() {
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} finally {
+			try { // liberer ressources de la mémoire
+				cn.close();
+				//st.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+
+	}
+
+	
+	private void addFriend() {
+		lireEnBase();
+
+		Scanner sc = new Scanner(System.in);
+		System.out.println("Entrez le numéro correspondant à votre ami: ");
+		this.friend = sc.nextInt();
+		sc.nextLine();
+
+		try {
+			/**
+			 * Chargement du driver
+			 */
+			Class.forName("com.mysql.jdbc.Driver");
+			/**
+			 * récupération de la connexion
+			 */
+			cn = DriverManager.getConnection(url, user, passwd);
+			/**
+			 * Création d'un statement
+			 */
+			st = cn.createStatement();
+			String sql = "INSERT INTO `friends` (`user_id`,`friend_id`) VALUES (" + currentUser + ",'" + this.friend
+					+ "')";
+			/**
+			 * exercution requete
+			 */
+			st.executeUpdate(sql);
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				/**
+				 * libérer ressource memoire, fermeture connection
+				 */
+				cn.close();
+				st.close();
+
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
+	private void deleteFriend() {
 		// TODO Auto-generated method stub
-		
-	}
-	
-
-	/**
-	 * menu0 = fonction du menu principal modo0
-	 * @return le menu de l'utilisateur basic
-	 */
-	private void menu0() {
-		System.out.println("BIENVENUE SUR SEECRETSPOT\n");
-		System.out.println("Faites votre choix :\n");
-
-		System.out.println("-1- Afficher votre profil");
-		System.out.println("-2- Afficher liste d'amis");
-		System.out.println("-3- Ajouter un ami");
-		System.out.println("-4- Supprimer un ami");
-		System.out.println("-5- Afficher");
-		System.out.println("-6- Ecrire un message");
-		System.out.println("-7- Afficher un message");
-		System.out.println("-8- Se deconnecter");
-		System.out.println("-9- Créer un profil");
-	}
-
-	/**
-	 * menu1 = fonction d'ajout de fonctionnalité au menu principal pour modo1
-	 * 
-	 * @return le menu du modo1
-	 */
-
-	private void menu1() {
-		System.out.println("-10- Supprimer un message");
-	}
-
-	/**
-	 * menu2 = fonction d'ajout de fonctionnalité au menu principal pour modo2
-	 * 
-	 * @return le menu du modo2
-	 */
-
-	private void menu2() {
-		System.out.println("-11- TESTER");
 	}
 
 } // public class Menu
-
-/*
- * public class Menu {
- * 
- * Scanner sc = new Scanner(System.in);
- * 
- * public void menu(Users userA) { boolean afficherMenu = true;
- * 
- * while(afficherMenu) { System.out.println("BIENVENUE SUR SEECRETSPOT\n");
- * System.out.println("Faites votre choix :\n");
- * 
- * System.out.println("-1- Afficher votre profil");
- * System.out.println("-2- Modifier les informations");
- * System.out.println("-3- Ecrire un message");
- * System.out.println("-4- Afficher un message");
- * System.out.println("-5- Se deconnecter");
- * System.out.println("-6- Créer un profil");
- * 
- * int menu = sc.nextInt(); sc.nextLine();
- * 
- * switch (menu) { case 1: ShowProfil(userA); break; case 2:
- * Users.modifierInfo(); break; case 3: Post.writeMessage(); break; case 4:
- * Post.showMessage(); break; case 5: logout(); break; } afficherMenu =
- * retMenu(); } //boucle while1 } //public void menu
- */

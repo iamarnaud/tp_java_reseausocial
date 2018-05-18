@@ -13,13 +13,13 @@ public class Main {
 		userA.setNom("Smith");
 		userA.setPrenom("Sam");
 		userA.setDateNaissance("12.12.2012");
-		System.out.println(userA.getPrenom());
+		//System.out.println(userA.getPrenom());
 
 		Users userB = new Users();
 		userB.setNom("Maurte");
 		userB.setPrenom("Adele");
 		userB.setDateNaissance("12.12.2012");		
-		System.out.println(userB.getPrenom());
+		//System.out.println(userB.getPrenom());
 
 		Moderateur modA = new Moderateur();
 		modA.setNom("");
@@ -28,9 +28,10 @@ public class Main {
 		modA.setMod(1); // changer le modo : 1 ou 2
 
 		// on place les users dans la liste
+		
 		listUsers.add(userA);
 		listUsers.add(userB);
-		System.out.println(listUsers.get(1));
+		//System.out.println(listUsers.get(1));
 
 		ArrayList<Users> friendsList = new ArrayList();
 		friendsList.add(userA);
