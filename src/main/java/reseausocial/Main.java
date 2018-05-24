@@ -1,11 +1,13 @@
 package reseausocial;
 
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 
 public class Main {
 
-	public static void main(String[] args) throws MenuException, DateException {
-
+	public static void main(String[] args) throws MenuException, DateException, SQLException {
+	
 		// Nouvelle liste
 		ArrayList<Users> listUsers = new ArrayList();
 

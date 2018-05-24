@@ -4,7 +4,7 @@ import java.lang.reflect.Array;
 import java.util.Scanner;
 // import java.util.Date;
 
-public class Users implements Relation {
+public class Users  {
 
 	protected String nom;
 	protected String prenom;
@@ -74,7 +74,7 @@ public class Users implements Relation {
 		return false; // modo niveau 0
 	}
 	
-	public void modifierInfo() {
+	/**public void modifierInfo() {
 		
 	}
 	
@@ -89,7 +89,7 @@ public class Users implements Relation {
 	@Override
 	public void ajouterPersonne() {
 		
-	}
+	}*/
 
 
 	

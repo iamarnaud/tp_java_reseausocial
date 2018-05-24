@@ -22,11 +22,7 @@ public class Menu {
 	// Il faudra définir le current comme la personne qui se connecte.
 
 	// information d'accès à la BDD
-	String url = "jdbc:mysql://localhost/modulejava";
-	String user = "root";
-	String passwd = "";
 
-	Connection cn = null;
 	Statement st = null;
 	ResultSet rs = null;
 	PreparedStatement stm = null;
@@ -74,7 +70,7 @@ public class Menu {
 	}
 
 	public void menu(Moderateur modA, ArrayList<Users> listUsers, ArrayList<Users> friendsList)
-			throws MenuException, DateException {
+			throws MenuException, DateException, SQLException {
 		boolean afficherMenu = true;
 
 		while (afficherMenu) {
@@ -219,6 +215,7 @@ public class Menu {
 
 	private void logout() {
 		System.out.println("Babye ! A bientôt sur SeecretSpot");
+		BddConnection.closeCo();
 	}
 
 	public void writeMessage(Moderateur modA) {
@@ -237,129 +234,36 @@ public class Menu {
 	 */
 
 	private void friendsList() {
-		try {
-			// chargement du driver
-			Class.forName("com.mysql.jdbc.Driver");
 
-			// récupération de la connexion
-			cn = DriverManager.getConnection(url, user, passwd);
-
-			// creation d'un statement pour ajouter un ami
-			st = cn.createStatement();
-			String sql = "SELECT ami.nom, ami.prenom FROM users AS current JOIN friends as F ON current.user_id = F.user_id JOIN users as ami ON ami.user_id = F.friend_id WHERE current.user_id = 5";
-
-			// execution requête
-			rs = st.executeQuery(sql);
-
-			while (rs.next()) {
-				System.out.println(rs.getString("nom") + " " + rs.getString("prenom"));
-
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		} finally {
-			try { // liberer ressources de la mémoire
-				cn.close();
-				st.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-		}
+		UsersDAO uDao = new UsersDAO();
+		uDao.showFriends();
 	}
 
-	public void lireEnBase() {
+	public void lireEnBase() throws SQLException {
 
-		try {
-			// chargement du driver
-			Class.forName("com.mysql.jdbc.Driver");
+		UsersDAO uDao= new UsersDAO();
+		uDao.showAllUsers();
 
-			// récupération de la connexion
-			cn = DriverManager.getConnection(url, user, passwd);
+		
 
-			// creation d'un statement
-			st = cn.createStatement();
-			String sql = "SELECT * FROM users";
-
-			// execution requête
-			rs = st.executeQuery(sql);
-
-			while (rs.next()) {
-				System.out.println(rs.getInt("user_id") + " " + rs.getString("nom") + " " + rs.getString("prenom"));
-
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		} finally {
-			try { // liberer ressources de la mémoire
-				cn.close();
-				st.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-		}
 	} // lireEnBase
 
-	
-	private void searchProfil() {
-
+	private void searchProfil() throws SQLException {
+		UsersDAO uDAO=new UsersDAO();
 		String nom;
 		String prenom;
-
+		
 		System.out.println("Chercher un utilisateur");
 		// Scanner sc = new Scanner(System.in);
 		System.out.println("nom");
 		nom = sc.nextLine();
 		System.out.println("prenom");
 		prenom = sc.nextLine();
-
-		try {
-			// chargement du driver
-			Class.forName("com.mysql.jdbc.Driver");
-
-			// récupération de la connexion
-			cn = DriverManager.getConnection(url, user, passwd);
-
-			/*
-			// creation d'un statement
-			st = cn.createStatement();
-			String sql = "SELECT * FROM users WHERE nom = '" + nom + "' AND prenom = '" + prenom + "' ";
-			*/
-			
-			// creation d'un prepared statement
-			String sql = "SELECT * FROM users WHERE nom=? AND prenom=?";
-			PreparedStatement preparedStatement = cn.prepareStatement(sql);
-			preparedStatement.setString(1, nom); // 1 c'est le 1er ?
-			preparedStatement.setString(2, prenom);
-			ResultSet rs = preparedStatement.executeQuery();
+		uDAO.profilUser(newProfil);
 		
-			// execution requête
-			//rs = st.executeQuery(sql);
-			
-			rs.next();
-			System.out.println("Voir le profil de " + rs.getString("nom") + " " + rs.getString("prenom"));
-			System.out.println("Date de naissance: " + rs.getString("date_naissance"));
-
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		} finally {
-			try { // liberer ressources de la mémoire
-				cn.close();
-				//st.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-		}
-
 	}
 
-	
-	private void addFriend() {
+	private void addFriend() throws SQLException {
 		lireEnBase();
 
 		Scanner sc = new Scanner(System.in);
@@ -368,18 +272,7 @@ public class Menu {
 		sc.nextLine();
 
 		try {
-			/**
-			 * Chargement du driver
-			 */
-			Class.forName("com.mysql.jdbc.Driver");
-			/**
-			 * récupération de la connexion
-			 */
-			cn = DriverManager.getConnection(url, user, passwd);
-			/**
-			 * Création d'un statement
-			 */
-			st = cn.createStatement();
+			st = BddConnection.getInstance().createStatement();
 			String sql = "INSERT INTO `friends` (`user_id`,`friend_id`) VALUES (" + currentUser + ",'" + this.friend
 					+ "')";
 			/**
@@ -390,24 +283,11 @@ public class Menu {
 		} catch (SQLException e) {
 			e.printStackTrace();
 
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		} finally {
-			try {
-				/**
-				 * libérer ressource memoire, fermeture connection
-				 */
-				cn.close();
-				st.close();
-
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
 		}
 	}
 
 	private void deleteFriend() {
-		// TODO Auto-generated method stub
+		
 	}
 
 } // public class Menu
