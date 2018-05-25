@@ -39,6 +39,8 @@ public class Main {
 		friendsList.add(userA);
 		friendsList.add(userB);
 		
+		//listUsers.remove(userA);
+		
 		Menu menu = new Menu();
 		menu.menu(modA, listUsers, friendsList);
 

@@ -6,6 +6,7 @@ import java.util.Scanner;
 
 public class Users  {
 
+	protected int id;
 	protected String nom;
 	protected String prenom;
 	protected String message;
@@ -21,8 +22,23 @@ public class Users  {
 		dateNaissance = "Inconnu";
 	}
 	
+	public Users(String nom, String prenom, String dateNaissance) {
+		super();
+		this.nom = nom;
+		this.prenom = prenom;
+		this.dateNaissance = dateNaissance;
+	}
+
 	// Accesseurs
 
+	public int getId() {
+		return id;
+	}
+
+	public int setId(int id) {
+		return this.id = id;
+	}
+	
 	public String getNom() {
 		return nom;
 	}

@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class Menu {
@@ -235,59 +236,57 @@ public class Menu {
 
 	private void friendsList() {
 
-		UsersDAO uDao = new UsersDAO();
-		uDao.showFriends();
+		List<Users> friendList;
+
+		UsersDAO fDao = new UsersDAO();
+		friendList = fDao.showFriends();
+		for (Users friend : friendList) {
+			System.out.println(friend.getNom() + " " + friend.getPrenom());
+		}
 	}
 
 	public void lireEnBase() throws SQLException {
 
-		UsersDAO uDao= new UsersDAO();
-		uDao.showAllUsers();
+		List<Users> userList;
 
-		
+		UsersDAO uDao = new UsersDAO();
+		userList = uDao.getAllUsers();
+
+		for (Users user : userList) {
+			System.out.println(user.getId() + " " + user.getNom() + " " + user.getPrenom());
+		}
 
 	} // lireEnBase
 
 	private void searchProfil() throws SQLException {
-		UsersDAO uDAO=new UsersDAO();
-		String nom;
-		String prenom;
-		
+		UsersDAO uDAO = new UsersDAO();
+		Users user = new Users();
 		System.out.println("Chercher un utilisateur");
-		// Scanner sc = new Scanner(System.in);
-		System.out.println("nom");
-		nom = sc.nextLine();
-		System.out.println("prenom");
-		prenom = sc.nextLine();
-		uDAO.profilUser(newProfil);
+		System.out.println("user_id");
+		int aze = user.setId(sc.nextInt());
+		sc.nextLine();
 		
-	}
+		user = uDAO.find(aze);
+		{
+			System.out.println("Le profil de " + user.getNom()+ " " + user.getPrenom());
+			System.out.println("Date de naissance: " + user.getDateNaissance());
+		}
+	
+	} // searchProfil
 
 	private void addFriend() throws SQLException {
 		lireEnBase();
-
+		UsersDAO uDAO = new UsersDAO();
 		Scanner sc = new Scanner(System.in);
 		System.out.println("Entrez le numéro correspondant à votre ami: ");
 		this.friend = sc.nextInt();
 		sc.nextLine();
+		//uDAO.addAFriend();
 
-		try {
-			st = BddConnection.getInstance().createStatement();
-			String sql = "INSERT INTO `friends` (`user_id`,`friend_id`) VALUES (" + currentUser + ",'" + this.friend
-					+ "')";
-			/**
-			 * exercution requete
-			 */
-			st.executeUpdate(sql);
-
-		} catch (SQLException e) {
-			e.printStackTrace();
-
-		}
-	}
+	} // addFriend
 
 	private void deleteFriend() {
-		
+
 	}
 
 } // public class Menu
